@@ -4,21 +4,6 @@ import plotly.express as px
 import json
 import os
 
-st.set_page_config(page_title="Simple Finance App", page_icon="💰", layout="wide")
-
-category_file = "categories.json"
-
-# Initialize session state for categories if not already set
-if "categories" not in st.session_state:
-    st.session_state.categories = {
-        "Uncategorized": []
-    }
-
-# Load categories from JSON file if it exists
-if os.path.exists(category_file):
-    with open(category_file, "r") as f:
-        st.session_state.categories = json.load(f)
-
 def save_categories():
     with open(category_file, "w") as f:
         json.dump(st.session_state.categories, f)
@@ -169,4 +154,19 @@ def main():
                 st.metric("Total Payments", f"${total_payments:,.2f}")
                 st.write(credits_df)
 
-main()
+if __name__ == "__main__":
+    st.set_page_config(page_title="Simple Finance App", page_icon="💰", layout="wide")
+
+    category_file = "categories.json"
+
+    # Initialize session state for categories if not already set
+    if "categories" not in st.session_state:
+        st.session_state.categories = {
+            "Uncategorized": []
+        }
+
+    # Load categories from JSON file if it exists
+    if os.path.exists(category_file):
+        with open(category_file, "r") as f:
+            st.session_state.categories = json.load(f)
+    main()
